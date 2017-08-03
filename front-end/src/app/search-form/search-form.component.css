@@ -1,9 +1,9 @@
 .form-container {
-  max-width: 550px;
+  max-width: 570px;
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto; 
   border: 1px solid rgba(0,0,0,.12);
-  padding: 20px 30px 0px; 
+  padding: 20px 20px 0px; 
 }
 
 search-field,

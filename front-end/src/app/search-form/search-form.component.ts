@@ -14,7 +14,7 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
     private bookingForm: FormGroup;
     private tripOptions: Option[];
     private tripForWorkOptions: Option[];
-    private displayOptions: boolean = false;
+    private displayOptions: boolean = true;
 
     @ViewChild('tripOptionsContainer') tripOptionsContainer: MdGridTile;
 
@@ -22,12 +22,12 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
 
     constructor(private cd: ChangeDetectorRef, private formDataService: FormDataService) {
         this.tripOptions = [
-            { controlName: 'freeCancelation', name: 'free cancellation', selected: false },
-            { controlName: 'breakFastIn', name: 'breakfast included', selected: false },
+            { controlName: 'bar', name: 'bar', selected: false },
             { controlName: 'freeWiFi', name: 'free wifi', selected: false },
+            { controlName: 'freeCancelation', name: 'free cancellation', selected: false },
             { controlName: 'parking', name: 'parking', selected: false },
             { controlName: 'fishing', name: 'fishing', selected: false },
-            { controlName: 'bar', name: 'bar', selected: false }
+            { controlName: 'breakFastIn', name: 'breakfast included', selected: false }
         ];
         this.tripForWorkOptions = [
             { controlName: 'tripForWork', name: 'Yes', selected: false },
