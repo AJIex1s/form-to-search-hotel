@@ -31,9 +31,9 @@
 md-checkbox:hover {
     cursor: text !important;
 }
-.progressBar  {
+form.search-requests-filter-form .search-requests-container .progressBar  {
   display: none;
 }
-.progressBar.active {
+form.search-requests-filter-form .search-requests-container .progressBar.active {
   display: block;
 }

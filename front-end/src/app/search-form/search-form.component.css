@@ -9,7 +9,7 @@
 search-field,
 date-range,
 option-list {
-  width: 100%;
+  width: 90%;
 }
 
 .search-button {
@@ -23,11 +23,11 @@ option-list {
 .trip-options {
   margin-top: -20px;
 }
-.loading  {
+.form-container .search-form .loading  {
   width: 60px;
   height: 60px;
   display: none;
 }
-.loading.active {
+.search-form .form-container .loading.active {
   display: block;
 }

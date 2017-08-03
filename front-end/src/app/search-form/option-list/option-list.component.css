@@ -2,10 +2,10 @@
     width: 100%;
     margin: 10px auto;
 }
-.options-list-header {
-  text-align: left;
-  width: 100%;
-}
 .option-container {
   text-align: left;
+}
+.option-item,
+.options-list-header {
+  width: 100%;
 }
