@@ -15,6 +15,7 @@ export class FormDataService {
     private destinationPlaces: string[] = destinationPlaces;
     private searchRequests: SearchRequest[] = [];
     private serviceUrl = ServiceUrl;
+    public OnError: Function;
 
     constructor(private http: Http) { }
 
@@ -32,7 +33,7 @@ export class FormDataService {
             .catch(err => this.handleError(err));
     }
 
-    sendSearchRequest(params: any): Observable<Response> {
+    sendSearchRequest(params: any): Observable<any> {
         let headers = new Headers({
             'Content-Type': 'application/json'
         });
@@ -43,6 +44,7 @@ export class FormDataService {
     }
 
     private handleError(error: any) {
+        this.OnError(error);
         console.error(error.message || error);
         return Observable.throw(error);
     }

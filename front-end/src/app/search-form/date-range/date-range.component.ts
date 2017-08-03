@@ -22,7 +22,6 @@ export class DateRangeComponent implements AfterContentChecked {
             .subscribe(value => this.checkInChanged(value));
 
         this.checkOutStateControl.valueChanges
-            .startWith(null)
             .subscribe(value => this.checkOutChanged(value));
     }
 
@@ -40,7 +39,7 @@ export class DateRangeComponent implements AfterContentChecked {
         if (!date)
             return;
         
-        let checkInDate =  this.checkOutStateControl.value;
+        let checkInDate =  this.checkInStateControl.value;
         let checkOutDate = date;
 
         if (checkInDate > checkOutDate || !checkInDate)

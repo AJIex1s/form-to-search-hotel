@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Option } from '../shared/classes';
 import { FormDataService } from '../shared/formData.service';
 
+
 @Component({
     moduleId: module.id.toString(),
     selector: "search-form",
@@ -15,6 +16,7 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
     private tripOptions: Option[];
     private tripForWorkOptions: Option[];
     private displayOptions: boolean = true;
+    private dataSending: boolean = false;
 
     @ViewChild('tripOptionsContainer') tripOptionsContainer: MdGridTile;
 
@@ -43,7 +45,7 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
         this.tripOptions.forEach(option => {
             this.bookingForm.addControl(option.controlName, new FormControl(false));
         });
-
+        this.formDataService.OnError = this.InterruptDataSending.bind(this);
     }
 
     ngAfterViewInit() {
@@ -58,12 +60,16 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
     ngAfterContentInit() {
         this.cd.detectChanges();
     }
+    
+    private InterruptDataSending() {
+        this.dataSending = false;
+    }
 
     private onBookingFormSubmit(event: Event) {
         event.preventDefault();
         if (this.bookingForm.invalid)
             return false;
-
+        this.dataSending = true;
         let jsonData = {};
         let preparedName: string = "";
         for (var controlName in this.bookingForm.controls) {
@@ -79,7 +85,7 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
             }
         }
         this.formDataService.sendSearchRequest(jsonData)
-            .subscribe(data => console.log(data));
+            .subscribe(data => this.dataSending = false);
     }
     private prepareFieldName(name: string) {
         return name.split(/(?=[A-Z])/)
