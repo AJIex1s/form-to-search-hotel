@@ -182,6 +182,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\FormsData.mdf" />
+    <Content Include="App_Data\FormsData_log.ldf">
+      <DependentUpon>FormsData.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\app-1.0.0.css" />
     <Content Include="Content\vendor-1.0.0.css" />
     <Content Include="favicon.ico" />
@@ -203,9 +207,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

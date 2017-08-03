@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormDataService } from '../shared/formData.service';
 import { SearchRequest, Field } from '../shared/classes';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/startWith';
+import 'rxjs/add/observable/throw';
 
 @Component({
     moduleId: module.id.toString(),
@@ -19,6 +22,7 @@ export class SearchRequestsListComponent implements OnInit {
     private fieldNames: string[] = [];
     private searchRequestsForm: FormGroup;
     private searchFieldStateControl: FormControl;
+    private dataLoading: boolean = false;
 
     constructor(private formDataService: FormDataService) {
         this.searchFieldStateControl = new FormControl();
@@ -28,6 +32,13 @@ export class SearchRequestsListComponent implements OnInit {
     }
     ngOnInit() {
         this.formDataService.getSearchRequestsData()
+            .catch(err => {
+                setTimeout(function () {
+                    this.dataLoading = false;
+                    alert("data doesn't loaded");
+                }.bind(this), 1000);
+                return Observable.throw(err);
+            })
             .startWith([])
             .subscribe(res => this.prepareInternalData(res));
 
@@ -35,7 +46,7 @@ export class SearchRequestsListComponent implements OnInit {
     filterSearchRequests(val: string): SearchRequest[] {
         console.log(val);
         if (!val) {
-            this.searchRequests.forEach(req=>req.fields.forEach(f => f.highlighted = false));
+            this.searchRequests.forEach(req => req.fields.forEach(f => f.highlighted = false));
             return this.searchRequests;
         }
 
@@ -61,6 +72,7 @@ export class SearchRequestsListComponent implements OnInit {
         return field.value == 'true' || field.value == 'false';
     }
     private prepareInternalData(searchRequests: SearchRequest[]) {
+        this.dataLoading = true;
         this.searchRequests = searchRequests;
         if (searchRequests.length > 0) {
             this.fieldNames = searchRequests[0].fields.map(field => field.name);
@@ -69,7 +81,8 @@ export class SearchRequestsListComponent implements OnInit {
         this.filteredSearchRequests = this.searchFieldStateControl.valueChanges
             .startWith("")
             .map(name => this.filterSearchRequests(name));
-            
+
+
         console.log(this.filteredSearchRequests);
     }
     private checkBoxClick(event: Event) {

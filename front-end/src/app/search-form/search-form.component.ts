@@ -4,6 +4,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Option } from '../shared/classes';
 import { FormDataService } from '../shared/formData.service';
 
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Component({
     moduleId: module.id.toString(),
@@ -45,7 +50,6 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
         this.tripOptions.forEach(option => {
             this.bookingForm.addControl(option.controlName, new FormControl(false));
         });
-        this.formDataService.OnError = this.InterruptDataSending.bind(this);
     }
 
     ngAfterViewInit() {
@@ -60,8 +64,8 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
     ngAfterContentInit() {
         this.cd.detectChanges();
     }
-    
-    private InterruptDataSending() {
+
+    private hideLoading() {
         this.dataSending = false;
     }
 
@@ -85,6 +89,13 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
             }
         }
         this.formDataService.sendSearchRequest(jsonData)
+            .catch(err => {
+                setTimeout(function () {
+                    this.dataSending = false;
+                    alert("data doesn't sended");
+                }.bind(this), 1000);
+                return Observable.throw(err);
+            })
             .subscribe(data => this.dataSending = false);
     }
     private prepareFieldName(name: string) {

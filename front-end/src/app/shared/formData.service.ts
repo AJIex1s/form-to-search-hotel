@@ -15,10 +15,11 @@ export class FormDataService {
     private destinationPlaces: string[] = destinationPlaces;
     private searchRequests: SearchRequest[] = [];
     private serviceUrl = ServiceUrl;
-    public OnError: Function;
 
     constructor(private http: Http) { }
+    subscribeOnError(handler: Function) {
 
+    }
     getDestinationPlaces(): string[] {
         return this.destinationPlaces;
     }
@@ -44,7 +45,6 @@ export class FormDataService {
     }
 
     private handleError(error: any) {
-        this.OnError(error);
         console.error(error.message || error);
         return Observable.throw(error);
     }

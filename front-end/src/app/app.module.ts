@@ -9,7 +9,7 @@ import { rootRouterConfig } from './app.routes';
 import {
     MdButtonModule, MdCheckboxModule, MdGridListModule, MdRadioModule,
     MdInputModule, MdAutocompleteModule, MdDatepickerModule, MdNativeDateModule,
-    MdListModule, MdSelectModule, MdProgressSpinnerModule
+    MdListModule, MdSelectModule, MdProgressSpinnerModule, MdProgressBarModule
 } from '@angular/material';
 import { AppComponent } from './app.component';
 import { BookingForm } from './search-form/search-form.component';
@@ -28,7 +28,7 @@ import { FormDataService } from './shared/formData.service';
         MdCheckboxModule, MdGridListModule, MdAutocompleteModule,
         ReactiveFormsModule, FormsModule, MdInputModule, MdDatepickerModule,
         MdNativeDateModule, MdRadioModule, MdListModule, MdSelectModule,
-        FormsModule, HttpModule, MdProgressSpinnerModule,
+        FormsModule, HttpModule, MdProgressSpinnerModule, MdProgressBarModule,
         RouterModule.forRoot(rootRouterConfig, { useHash: false })],
     declarations: [
         AppComponent,

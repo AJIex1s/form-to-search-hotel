@@ -31,3 +31,9 @@
 md-checkbox:hover {
     cursor: text !important;
 }
+.progressBar  {
+  display: none;
+}
+.progressBar.active {
+  display: block;
+}
