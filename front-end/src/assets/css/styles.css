@@ -1,0 +1,13 @@
+body{
+    font-family: 'Roboto', 'Helvetica Neue Light', 'Helvetica Neue', 
+    'Helvetica', 'Arial', 'Lucida Grande', 'sans-serif' !important;
+}
+/* <hacks> */
+.option-container > .mat-figure {
+  justify-content: flex-start !important;
+  padding-left: 15px !important;
+}
+.options-list {
+    padding-left: 20px;
+}
+/* </hacks> */

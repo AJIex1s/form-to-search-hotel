@@ -1,0 +1,32 @@
+<div class="form-container">
+        <form (submit)="onBookingFormSubmit($event)" class="search-form" [formGroup]="bookingForm">
+            <!-- <md-spinner class="loading" [ngClass]="active"></md-spinner>
+            <div class="loading-overlay"></div> -->
+            <md-grid-list cols="1" rowHeight="75px">
+                <md-grid-tile>
+                    <search-field [stateControl]="bookingForm.controls.searchFieldStateControl"></search-field>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <date-range [checkInStateControl]="bookingForm.controls.checkInStateControl"
+                        [checkOutStateControl]="bookingForm.controls.checkOutStateControl">
+                    </date-range>
+                </md-grid-tile>
+                <ng-template [ngIf]="displayOptions">
+                    <md-grid-tile >
+                        <option-list [columnCount]="3" titlePosition="left" class="travel-for-work-block"
+                        title="Travel for work: " [options]="tripForWorkOptions"
+                            [listType]="'radioList'" [parentFormGroup]="bookingForm" ></option-list>
+                    </md-grid-tile>
+                    <md-grid-tile #tripOptionsContainer class="trip-options" [ngClass]="{ minimized: 'hidden' }">
+                        <option-list [columnCount]="3" #tripOptionList [title]="'Trip Options'" [options]="tripOptions"
+                            [listType]="'checkList'" [parentFormGroup]="bookingForm" titlePosition="top"></option-list>
+                    </md-grid-tile>
+                </ng-template>
+                <md-grid-tile>
+                    <button md-raised-button class="search-button" type="submit">Search
+                    </button>
+                </md-grid-tile>
+            </md-grid-list>
+        </form>
+    </div>
+    <div class="search-results"></div>

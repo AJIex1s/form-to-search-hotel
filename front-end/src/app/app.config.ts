@@ -1,0 +1,1 @@
+export const ServiceUrl = "http://localhost:38127/api/dataservice/";

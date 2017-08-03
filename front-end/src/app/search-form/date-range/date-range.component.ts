@@ -1,0 +1,49 @@
+import { Component, Input, AfterContentChecked } from '@angular/core';
+import { MdDatepickerInput } from '@angular/material';
+import { FormControl } from '@angular/forms';
+import { GetNextDayDate, GetPrevDayDate } from '../../shared/dateHelper';
+
+@Component({
+    moduleId: module.id.toString(),
+    selector: 'date-range',
+    templateUrl: 'date-range.component.html',
+    styleUrls: ['date-range.component.css']
+})
+export class DateRangeComponent implements AfterContentChecked {
+    @Input('checkInStateControl') checkInStateControl: FormControl;
+    @Input('checkOutStateControl') checkOutStateControl: FormControl;
+    private currentDate: Date;
+    constructor() {
+        this.currentDate = new Date();
+    }
+    
+    ngAfterContentChecked() {
+        this.checkInStateControl.valueChanges
+            .subscribe(value => this.checkInChanged(value));
+
+        this.checkOutStateControl.valueChanges
+            .startWith(null)
+            .subscribe(value => this.checkOutChanged(value));
+    }
+
+    private checkInChanged(date: Date) {
+        if (!date)
+            return;
+
+        let checkInDate = date;
+        let checkOutDate = this.checkOutStateControl.value;
+
+        if (checkInDate > checkOutDate || !checkOutDate)
+            this.checkOutStateControl.setValue(GetNextDayDate(checkInDate));
+    }
+    private checkOutChanged(date: Date) {
+        if (!date)
+            return;
+        
+        let checkInDate =  this.checkOutStateControl.value;
+        let checkOutDate = date;
+
+        if (checkInDate > checkOutDate || !checkInDate)
+            this.checkInStateControl.setValue(GetPrevDayDate(checkOutDate));
+    }
+}
