@@ -1,6 +1,7 @@
 <md-radio-button 
     [checked]="selected"
     [formControl]="stateControl" 
-    ngDefaultControl>
+    ngDefaultControl
+    (change)="valueChanged($event)">
     {{name}}
 </md-radio-button>
