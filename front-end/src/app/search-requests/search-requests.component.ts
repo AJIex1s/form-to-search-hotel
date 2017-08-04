@@ -50,7 +50,13 @@ export class SearchRequestsComponent implements OnInit {
         }.bind(this), 300);
     }
     private prepareInternalData(searchRequests: SearchFormData[]) {
-        this.searchRequests = searchRequests;
+        this.searchRequests = searchRequests.sort((req1, req2)=>{
+            if(req1.sended > req2.sended)
+                return 1;
+            if(req1.sended < req2.sended)
+                return -1;
+            return 0;
+        });
         if (searchRequests.length > 0) {
             this.fieldNames = searchRequests[0].fields.map(field => field.name);
             this.dataFieldsCount = searchRequests[0].fields.length;
