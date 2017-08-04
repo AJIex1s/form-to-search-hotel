@@ -79,10 +79,11 @@ export class SearchFormComponent implements AfterViewInit, AfterContentInit {
             .subscribe(data => this.dataSending = false);
     }
     private onSubmitRequesError() {
+        //prevent blinking
         setTimeout(function () {
             this.dataSending = false;
             alert("data doesn't sended");
-        }.bind(this), 500);
+        }.bind(this), 1000);
     }
     private getPreparedFormDataToSend(): object {
         let jsonData = {};

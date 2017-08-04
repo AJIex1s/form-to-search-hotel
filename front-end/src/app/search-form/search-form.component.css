@@ -28,6 +28,6 @@ option-list {
   height: 60px;
   display: none;
 }
-.search-form .form-container .loading.active {
+.form-container .search-form .loading.active {
   display: block;
 }
