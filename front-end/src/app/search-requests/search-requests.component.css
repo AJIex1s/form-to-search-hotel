@@ -37,3 +37,6 @@ form.search-requests-filter-form .search-requests-container .progressBar  {
 form.search-requests-filter-form .search-requests-container .progressBar.active {
   display: block;
 }
+form.search-requests-filter-form .search-requests-container .send-date-container {
+    text-align: center;
+}

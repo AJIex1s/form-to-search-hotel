@@ -11,5 +11,5 @@ export const GetPrevDayDate = function (date: Date): Date {
     return this.GetShiftedDate(date, -1);
 }
 export const GetFormattedDate = function (date: string): string {
-    return new Date(date).toLocaleDateString();
+    return new Date(date).toLocaleDateString() + " " + new Date(date).toLocaleTimeString();
 }

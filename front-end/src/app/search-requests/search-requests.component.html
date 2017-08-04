@@ -25,7 +25,7 @@
                 </div>
             </md-grid-tile>
             <ng-container *ngFor="let request of filteredSearchRequests | async">
-                <md-grid-tile>
+                <md-grid-tile class="send-date-container">
                     {{request.sended}}
                 </md-grid-tile>
                 <md-grid-tile *ngFor="let field of request.fields" [ngClass]="{'highlighted': field.highlighted}">
