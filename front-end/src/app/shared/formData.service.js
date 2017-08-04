@@ -30,7 +30,6 @@ var FormDataService = (function () {
     FormDataService.prototype.getSearchRequestsData = function () {
         var _this = this;
         var searchRequests = [];
-        console.log("entry");
         return this.http.get(this.apiUrl)
             .map(function (res) { return res.json(); })
             .map(function (formsData) {

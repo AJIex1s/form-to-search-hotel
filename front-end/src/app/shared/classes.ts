@@ -15,10 +15,9 @@ export class Field {
 }
 export class SearchRequest {
     public fields: Field[] = [];
-    constructor(public sended: string,
-        public fieldValues: string) {
-
-       let fieldValuesJson = JSON.parse(this.fieldValues);
-        this.fields = Object.keys(fieldValuesJson).map(key => new Field(key, fieldValuesJson[key]));
+    constructor(public sended: string, public fieldValues: string) {
+        let fieldValuesJson = JSON.parse(this.fieldValues);
+        this.fields = Object.keys(fieldValuesJson)
+            .map(key => new Field(key, fieldValuesJson[key]));
     }
 }

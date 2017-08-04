@@ -93,7 +93,7 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
                 setTimeout(function () {
                     this.dataSending = false;
                     alert("data doesn't sended");
-                }.bind(this), 1000);
+                }.bind(this), 500);
                 return Observable.throw(err);
             })
             .subscribe(data => this.dataSending = false);

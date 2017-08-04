@@ -39,7 +39,6 @@ export class FormDataService {
             'Content-Type': 'application/json'
         });
         let options = new RequestOptions({ headers });
-        console.log(params);
         return this.http.post(this.serviceUrl, params, options)
             .catch(err => this.handleError(err));
     }

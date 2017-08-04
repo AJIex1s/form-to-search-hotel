@@ -11,11 +11,11 @@ import 'rxjs/add/observable/throw';
 
 @Component({
     moduleId: module.id.toString(),
-    selector: 'search-requests-list',
-    templateUrl: 'search-requests-list.component.html',
-    styleUrls: ['search-requests-list.component.css']
+    selector: 'search-requests',
+    templateUrl: 'search-requests.component.html',
+    styleUrls: ['search-requests.component.css']
 })
-export class SearchRequestsListComponent implements OnInit {
+export class SearchRequestsComponent implements OnInit {
     searchRequests: SearchRequest[] = [];
     filteredSearchRequests: any;
     private dataFieldsCount: number = 0;
@@ -23,6 +23,7 @@ export class SearchRequestsListComponent implements OnInit {
     private searchRequestsForm: FormGroup;
     private searchFieldStateControl: FormControl;
     private dataLoading: boolean = false;
+    private readonly DATA_LOADING_HIDE_DELAY_ON_ERROR = 1000;
 
     constructor(private formDataService: FormDataService) {
         this.searchFieldStateControl = new FormControl();
@@ -30,25 +31,46 @@ export class SearchRequestsListComponent implements OnInit {
             'searchFieldControl': this.searchFieldStateControl
         });
     }
+
     ngOnInit() {
+        this.dataLoading = true;
         this.formDataService.getSearchRequestsData()
-            .catch(err => {
-                setTimeout(function () {
-                    this.dataLoading = false;
-                    alert("data doesn't loaded");
-                }.bind(this), 1000);
-                return Observable.throw(err);
-            })
-            .startWith([])
-            .subscribe(res => this.prepareInternalData(res));
+            .catch(err => this.onDataReceivingError(err))
+            .subscribe(res => this.onDataRecieved(res))
+    }
+    // process received searchRequest array    
+    private onDataRecieved(searchRequests: SearchRequest[]) {
+        this.prepareInternalData(searchRequests);
+        this.subscribeOnFilterChanged();
+        this.hideLoading();
+    }
+    private hideLoading() {
+        setTimeout(function () {
+            this.dataLoading = false;
+        }.bind(this), 300);
+    }
+    private prepareInternalData(searchRequests: SearchRequest[]) {
+        this.searchRequests = searchRequests;
+        if (searchRequests.length > 0) {
+            this.fieldNames = searchRequests[0].fields.map(field => field.name);
+            this.dataFieldsCount = searchRequests[0].fields.length;
+        }
+    }
+    private subscribeOnFilterChanged() {
+        this.filteredSearchRequests = this.searchFieldStateControl.valueChanges
+            .startWith("")
+            .map(name => this.filterSearchRequests(name));
+    }
+
+    private resetDataFieldsHighlighting() {
 
     }
-    filterSearchRequests(val: string): SearchRequest[] {
-        console.log(val);
-        if (!val) {
-            this.searchRequests.forEach(req => req.fields.forEach(f => f.highlighted = false));
+    // filter(search in data)
+    private filterSearchRequests(val: string): SearchRequest[] {
+        this.searchRequests.forEach(req => req.fields.forEach(f => f.highlighted = false));
+
+        if (!val)
             return this.searchRequests;
-        }
 
         let preparedFilterValue = val.toLowerCase();
         let isFieldAffectedByFilter: boolean = false;
@@ -71,19 +93,13 @@ export class SearchRequestsListComponent implements OnInit {
     private needToRenderCheckBox(field: Field) {
         return field.value == 'true' || field.value == 'false';
     }
-    private prepareInternalData(searchRequests: SearchRequest[]) {
-        this.dataLoading = true;
-        this.searchRequests = searchRequests;
-        if (searchRequests.length > 0) {
-            this.fieldNames = searchRequests[0].fields.map(field => field.name);
-            this.dataFieldsCount = searchRequests[0].fields.length;
-        }
-        this.filteredSearchRequests = this.searchFieldStateControl.valueChanges
-            .startWith("")
-            .map(name => this.filterSearchRequests(name));
+    private onDataReceivingError(err: any) {
+        setTimeout(function () {
+            this.dataLoading = false;
+            alert("data doesn't loaded");
+        }.bind(this), this.DATA_LOADING_HIDE_DELAY_ON_ERROR);
 
-
-        console.log(this.filteredSearchRequests);
+        return Observable.throw(err);
     }
     private checkBoxClick(event: Event) {
         event.preventDefault();

@@ -19,7 +19,7 @@ import { OptionListComponent } from './search-form/option-list/option-list.compo
 import { CheckOptionComponent } from './search-form/check-option/check-option.component';
 import { RadioOptionComponent } from './search-form/radio-option/radio-option.component';
 
-import { SearchRequestsListComponent } from './search-requests-list/search-requests-list.component';
+import { SearchRequestsComponent } from './search-requests/search-requests.component';
 
 import { FormDataService } from './shared/formData.service';
 
@@ -38,7 +38,7 @@ import { FormDataService } from './shared/formData.service';
         OptionListComponent,
         CheckOptionComponent,
         RadioOptionComponent,
-        SearchRequestsListComponent
+        SearchRequestsComponent
     ],
     providers: [FormDataService],
     bootstrap: [AppComponent]

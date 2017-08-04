@@ -21,7 +21,7 @@ var date_range_component_1 = require("./search-form/date-range/date-range.compon
 var option_list_component_1 = require("./search-form/option-list/option-list.component");
 var check_option_component_1 = require("./search-form/check-option/check-option.component");
 var radio_option_component_1 = require("./search-form/radio-option/radio-option.component");
-var search_requests_list_component_1 = require("./search-requests-list/search-requests-list.component");
+var search_requests_list_component_1 = require("./search-requests/search-requests.component");
 var formData_service_1 = require("./shared/formData.service");
 var AppModule = (function () {
     function AppModule() {
