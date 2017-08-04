@@ -16,48 +16,38 @@ import 'rxjs/add/observable/throw';
     templateUrl: "search-form.component.html",
     styleUrls: ["search-form.component.css"]
 })
-export class BookingForm implements AfterViewInit, AfterContentInit {
-    private bookingForm: FormGroup;
-    private tripOptions: Option[];
+export class SearchFormComponent implements AfterViewInit, AfterContentInit {
+    private searchFormGroup: FormGroup;
+    private commonTripOptions: Option[];
     private tripForWorkOptions: Option[];
     private displayOptions: boolean = true;
     private dataSending: boolean = false;
-
     @ViewChild('tripOptionsContainer') tripOptionsContainer: MdGridTile;
 
-
-
+    //refactor - rewrite by builder
     constructor(private cd: ChangeDetectorRef, private formDataService: FormDataService) {
-        this.tripOptions = [
-            { controlName: 'bar', name: 'bar', selected: false },
-            { controlName: 'freeWiFi', name: 'free wifi', selected: false },
-            { controlName: 'freeCancelation', name: 'free cancellation', selected: false },
-            { controlName: 'parking', name: 'parking', selected: false },
-            { controlName: 'fishing', name: 'fishing', selected: false },
-            { controlName: 'breakFastIn', name: 'breakfast included', selected: false }
-        ];
+        this.initializeFormData();
+        this.initializeFormGroup();
+    }
+    private initializeFormData() {
+        this.commonTripOptions = this.formDataService.getTripOptions();
         this.tripForWorkOptions = [
             { controlName: 'tripForWork', name: 'Yes', selected: false },
             { controlName: 'tripNotForWork', name: 'No', selected: true }
         ];
-        this.bookingForm = new FormGroup({
+    }
+    private initializeFormGroup() {
+        this.searchFormGroup = new FormGroup({
             'searchFieldStateControl': new FormControl(),
             'checkInStateControl': new FormControl(),
             'checkOutStateControl': new FormControl(),
             'tripForWork': new FormControl(false),
             'tripNotForWork': new FormControl(true)
         });
-        this.tripOptions.forEach(option => {
-            this.bookingForm.addControl(option.controlName, new FormControl(false));
-        });
-    }
 
-    ngAfterViewInit() {
-        if (this.displayOptions) {
-            let tripOptionsCount = this.tripOptions.length;
-            let optionsRowCount = Math.ceil(tripOptionsCount / 3);
-            this.tripOptionsContainer.rowspan = optionsRowCount + 1;
-        }
+        this.commonTripOptions.forEach(option => {
+            this.searchFormGroup.addControl(option.controlName, new FormControl(false));
+        });
     }
 
     //workaround for ExpressionChangedAfterItHasBeenCheckedError
@@ -65,21 +55,44 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
         this.cd.detectChanges();
     }
 
-    private hideLoading() {
-        this.dataSending = false;
+    ngAfterViewInit() {
+        if (this.displayOptions) {
+            let tripOptionsCount = this.commonTripOptions.length;
+            let optionsRowCount = Math.ceil(tripOptionsCount / 3);
+            this.tripOptionsContainer.rowspan = optionsRowCount + 1;
+        }
     }
 
-    private onBookingFormSubmit(event: Event) {
+    private searchFormSubmit(event: Event) {
         event.preventDefault();
-        if (this.bookingForm.invalid)
+        if (this.searchFormGroup.invalid)
             return false;
+
         this.dataSending = true;
+        let jsonData = this.getPreparedFormDataToSend();
+
+        this.formDataService.sendSearchRequest(jsonData)
+            .catch(err => {
+                this.onSubmitRequesError();
+                return Observable.throw(err);
+            })
+            .subscribe(data => this.dataSending = false);
+    }
+    private onSubmitRequesError() {
+        setTimeout(function () {
+            this.dataSending = false;
+            alert("data doesn't sended");
+        }.bind(this), 500);
+    }
+    private getPreparedFormDataToSend(): object {
         let jsonData = {};
         let preparedName: string = "";
-        for (var controlName in this.bookingForm.controls) {
-            if (this.bookingForm.controls.hasOwnProperty(controlName)) {
-                var element = this.bookingForm.controls[controlName];
+
+        for (var controlName in this.searchFormGroup.controls) {
+            if (this.searchFormGroup.controls.hasOwnProperty(controlName)) {
+                var element = this.searchFormGroup.controls[controlName];
                 preparedName = this.prepareFieldName(controlName);
+                //refactor - hack controlName != "tripNotForWork"
                 if (controlName != "tripNotForWork") {
                     if (element.value instanceof Date)
                         jsonData[preparedName] = (element.value as Date).toLocaleDateString();
@@ -88,16 +101,9 @@ export class BookingForm implements AfterViewInit, AfterContentInit {
                 }
             }
         }
-        this.formDataService.sendSearchRequest(jsonData)
-            .catch(err => {
-                setTimeout(function () {
-                    this.dataSending = false;
-                    alert("data doesn't sended");
-                }.bind(this), 500);
-                return Observable.throw(err);
-            })
-            .subscribe(data => this.dataSending = false);
+        return jsonData;
     }
+    //refactor - hack for field names 
     private prepareFieldName(name: string) {
         return name.split(/(?=[A-Z])/)
             .map(part => part.toLowerCase())

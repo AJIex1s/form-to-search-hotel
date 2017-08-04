@@ -6,7 +6,7 @@ exports.rootRouterConfig = [
     { path: '', redirectTo: '', pathMatch: 'full' },
     { path: 'searchRequests', component: search_requests_list_component_1.SearchRequestsListComponent },
     { path: 'searchRequests/', component: search_requests_list_component_1.SearchRequestsListComponent },
-    { path: 'booking/', component: search_form_component_1.BookingForm },
-    { path: 'booking', component: search_form_component_1.BookingForm }
+    { path: 'booking/', component: search_form_component_1.SearchFormComponent },
+    { path: 'booking', component: search_form_component_1.SearchFormComponent }
 ];
 //# sourceMappingURL=app.routes.js.map

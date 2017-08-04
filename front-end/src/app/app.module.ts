@@ -12,7 +12,7 @@ import {
     MdListModule, MdSelectModule, MdProgressSpinnerModule, MdProgressBarModule
 } from '@angular/material';
 import { AppComponent } from './app.component';
-import { BookingForm } from './search-form/search-form.component';
+import { SearchFormComponent } from './search-form/search-form.component';
 import { SearchFieldComponent } from './search-form/search-field/search-field.component';
 import { DateRangeComponent } from './search-form/date-range/date-range.component';
 import { OptionListComponent } from './search-form/option-list/option-list.component';
@@ -32,7 +32,7 @@ import { FormDataService } from './shared/formData.service';
         RouterModule.forRoot(rootRouterConfig, { useHash: false })],
     declarations: [
         AppComponent,
-        BookingForm,
+        SearchFormComponent,
         SearchFieldComponent,
         DateRangeComponent,
         OptionListComponent,

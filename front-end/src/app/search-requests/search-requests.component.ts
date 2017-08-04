@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormDataService } from '../shared/formData.service';
-import { SearchRequest, Field } from '../shared/classes';
+import { SearchFormData, Field } from '../shared/classes';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
@@ -16,7 +16,7 @@ import 'rxjs/add/observable/throw';
     styleUrls: ['search-requests.component.css']
 })
 export class SearchRequestsComponent implements OnInit {
-    searchRequests: SearchRequest[] = [];
+    searchRequests: SearchFormData[] = [];
     filteredSearchRequests: any;
     private dataFieldsCount: number = 0;
     private fieldNames: string[] = [];
@@ -39,7 +39,7 @@ export class SearchRequestsComponent implements OnInit {
             .subscribe(res => this.onDataRecieved(res))
     }
     // process received searchRequest array    
-    private onDataRecieved(searchRequests: SearchRequest[]) {
+    private onDataRecieved(searchRequests: SearchFormData[]) {
         this.prepareInternalData(searchRequests);
         this.subscribeOnFilterChanged();
         this.hideLoading();
@@ -49,7 +49,7 @@ export class SearchRequestsComponent implements OnInit {
             this.dataLoading = false;
         }.bind(this), 300);
     }
-    private prepareInternalData(searchRequests: SearchRequest[]) {
+    private prepareInternalData(searchRequests: SearchFormData[]) {
         this.searchRequests = searchRequests;
         if (searchRequests.length > 0) {
             this.fieldNames = searchRequests[0].fields.map(field => field.name);
@@ -66,24 +66,22 @@ export class SearchRequestsComponent implements OnInit {
 
     }
     // filter(search in data)
-    private filterSearchRequests(val: string): SearchRequest[] {
+    private filterSearchRequests(val: string): SearchFormData[] {
         this.searchRequests.forEach(req => req.fields.forEach(f => f.highlighted = false));
 
         if (!val)
             return this.searchRequests;
 
         let preparedFilterValue = val.toLowerCase();
-        let isFieldAffectedByFilter: boolean = false;
         let needToShowRequest: boolean = false;
 
         return this.searchRequests.filter(request => {
             needToShowRequest = false;
 
             request.fields.forEach(field => {
-                isFieldAffectedByFilter = field.value.toString().toLowerCase().indexOf(preparedFilterValue) > -1;
-                field.highlighted = isFieldAffectedByFilter;
+                field.highlighted = field.value.toString().toLowerCase().indexOf(preparedFilterValue) > -1;
 
-                if (!needToShowRequest && isFieldAffectedByFilter)
+                if (!needToShowRequest && field.highlighted)
                     needToShowRequest = true;
             });
 

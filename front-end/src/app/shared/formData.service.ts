@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { destinationPlaces } from './data';
-import { SearchRequest, FormData } from './classes';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+
+import { SearchFormData, FormData, Option } from './classes';
 import { GetFormattedDate } from './dateHelper';
 import { ServiceUrl } from '../app.config';
+
+import { destinationPlaces, tripOptions } from './data';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -13,23 +15,24 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class FormDataService {
     private destinationPlaces: string[] = destinationPlaces;
-    private searchRequests: SearchRequest[] = [];
+    private searchRequests: SearchFormData[] = [];
     private serviceUrl = ServiceUrl;
 
     constructor(private http: Http) { }
-    subscribeOnError(handler: Function) {
-
-    }
+    getTripOptions(): Option[] {
+        return tripOptions;
+    } 
     getDestinationPlaces(): string[] {
         return this.destinationPlaces;
     }
 
-    getSearchRequestsData(): Observable<SearchRequest[]> {
-        let searchRequests: SearchRequest[] = [];
+    getSearchRequestsData(): Observable<SearchFormData[]> {
+        let searchRequests: SearchFormData[] = [];
         return this.http.get(this.serviceUrl)
             .map(res => res.json() as FormData[])
             .map(formsData => {
-                return formsData.map(formData => new SearchRequest(GetFormattedDate(formData.Sended), formData.FieldsValues));
+                return formsData.map(formData =>
+                     new SearchFormData(GetFormattedDate(formData.Sended), formData.FieldsValues));
             })
             .catch(err => this.handleError(err));
     }

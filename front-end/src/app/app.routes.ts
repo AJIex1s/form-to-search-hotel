@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { BookingForm } from './search-form/search-form.component';
+import { SearchFormComponent } from './search-form/search-form.component';
 import { SearchRequestsComponent } from './search-requests/search-requests.component';
 
 export const rootRouterConfig: Routes = [
@@ -9,6 +9,6 @@ export const rootRouterConfig: Routes = [
   { path: 'app/', redirectTo: 'app/searchForm/', pathMatch: 'full' },
   { path: 'app/searchRequests', redirectTo: 'app/searchRequests/', pathMatch: 'full' },
   
-  { path: 'app/searchForm/', component: BookingForm },
+  { path: 'app/searchForm/', component: SearchFormComponent },
   { path: 'app/searchRequests/', component: SearchRequestsComponent },
 ];

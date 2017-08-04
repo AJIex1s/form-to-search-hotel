@@ -1,4 +1,10 @@
-<md-grid-list [cols]="columnCount" class="options-list" rowHeight="50px" gutterSize="0px" [formGroup]="parentFormGroup">
+<md-grid-list 
+    [cols]="columnCount" 
+    class="options-list" 
+    rowHeight="50px" 
+    gutterSize="0px" 
+    [formGroup]="parentFormGroup">
+    
     <md-grid-tile [colspan]="titlePosition == 'top' ? columnCount : 1">
         <div class="options-list-header">
         <span *ngIf='title; else defaultTitle'>
@@ -8,15 +14,22 @@
         </div>
     </md-grid-tile>
     <md-grid-tile *ngFor="let option of options; let i=index" class="option-container">
-         <ng-template *ngIf='listType=="checkList"; then checkList else radioList'>
+         <ng-template 
+            *ngIf='listType=="checkList"; then checkList else radioList'>
         </ng-template>
          <ng-template #checkList>
-            <check-option [stateControl]="parentFormGroup.controls[option.controlName]"
-                [name]="option.name" [selected]="option.selected"></check-option>
+            <check-option 
+                [stateControl]="parentFormGroup.controls[option.controlName]"
+                [name]="option.name" 
+                [selected]="option.selected">
+            </check-option>
         </ng-template>
         <ng-template #radioList>
-            <radio-option [stateControl]="parentFormGroup.controls[option.controlName]"
-                [name]="option.name" [selected]="option.selected"></radio-option>
+            <radio-option 
+                [stateControl]="parentFormGroup.controls[option.controlName]"
+                [name]="option.name" 
+                [selected]="option.selected">
+            </radio-option>
         </ng-template>  
     </md-grid-tile>
 </md-grid-list>

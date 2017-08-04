@@ -36,7 +36,7 @@ var AppModule = (function () {
                 router_1.RouterModule.forRoot(app_routes_1.rootRouterConfig, { useHash: false })],
             declarations: [
                 app_component_1.AppComponent,
-                search_form_component_1.BookingForm,
+                search_form_component_1.SearchFormComponent,
                 search_field_component_1.SearchFieldComponent,
                 date_range_component_1.DateRangeComponent,
                 option_list_component_1.OptionListComponent,

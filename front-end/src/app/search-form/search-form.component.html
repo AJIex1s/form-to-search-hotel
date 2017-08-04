@@ -1,28 +1,50 @@
 <div class="form-container">
-        <form (submit)="onBookingFormSubmit($event)" class="search-form" [formGroup]="bookingForm">
+        <form (submit)="searchFormSubmit($event)" class="search-form" [formGroup]="searchFormGroup">
             <md-grid-list cols="1" rowHeight="75px">
                 <md-grid-tile>
-                    <search-field [stateControl]="bookingForm.controls.searchFieldStateControl"></search-field>
+                    <search-field [stateControl]="searchFormGroup.controls.searchFieldStateControl">
+                    </search-field>
                 </md-grid-tile>
                 <md-grid-tile>
-                    <date-range [checkInStateControl]="bookingForm.controls.checkInStateControl"
-                        [checkOutStateControl]="bookingForm.controls.checkOutStateControl">
+                    <date-range 
+                        [checkInStateControl]="searchFormGroup.controls.checkInStateControl"
+                        [checkOutStateControl]="searchFormGroup.controls.checkOutStateControl">
                     </date-range>
                 </md-grid-tile>
                 <ng-template [ngIf]="displayOptions">
-                    <md-grid-tile >
-                        <option-list [columnCount]="3" titlePosition="left" class="travel-for-work-block"
-                        title="Travel for work: " [options]="tripForWorkOptions"
-                            [listType]="'radioList'" [parentFormGroup]="bookingForm" ></option-list>
+                    <md-grid-tile>
+                        <option-list 
+                            [columnCount]="3"
+                            titlePosition="left"
+                            class="travel-for-work-block"
+                            title="Travel for work: "
+                            [options]="tripForWorkOptions"
+                            [listType]="'radioList'"
+                            [parentFormGroup]="searchFormGroup" >
+                        </option-list>
                     </md-grid-tile>
                     <md-grid-tile #tripOptionsContainer class="trip-options">
-                        <option-list #tripOptionList [columnCount]="3"  [title]="'Trip Options'" [options]="tripOptions"
-                            [listType]="'checkList'" [parentFormGroup]="bookingForm" titlePosition="top"></option-list>
+                        <option-list #tripOptionList 
+                            [columnCount]="3"  
+                            [title]="'Trip Options'" 
+                            [options]="commonTripOptions"
+                            listType="checkList"
+                            [parentFormGroup]="searchFormGroup" 
+                            titlePosition="top">
+                        </option-list>
                     </md-grid-tile>
                 </ng-template>
                 <md-grid-tile>
-                    <md-spinner class="loading" [ngClass]="{'active': dataSending}" strokeWidth="10"></md-spinner>
-                     <button md-raised-button class="search-button" type="submit" [ngClass]="{'hidden': dataSending}">
+                    <md-spinner 
+                        class="loading" 
+                        [ngClass]="{'active': dataSending}" 
+                        strokeWidth="10">
+                    </md-spinner>
+                     <button 
+                        md-raised-button 
+                        class="search-button" 
+                        type="submit" 
+                        [ngClass]="{'hidden': dataSending}">
                         Search
                     </button> 
                 </md-grid-tile>

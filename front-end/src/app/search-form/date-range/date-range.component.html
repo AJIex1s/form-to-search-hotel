@@ -1,19 +1,48 @@
-<md-grid-list cols="2" rowHeight="85px" class="date-range-content" gutterSize="50px">
+<md-grid-list 
+    cols="2" 
+    rowHeight="85px" 
+    class="date-range-content" 
+    gutterSize="50px">
+    
     <md-grid-tile>
         <md-input-container class="date-picker-container" (click)="checkIn.open()">
-            <input #checkInInput mdInput [mdDatepicker]="checkIn" [readonly]="true"
-                required [formControl]="checkInStateControl"
-                placeholder="Check in date" [min]="currentDate">
-            <button mdSuffix [mdDatepickerToggle]="checkIn"></button>
+            <input 
+                #checkInInput 
+                mdInput 
+                [mdDatepicker]="checkIn" 
+                [readonly]="true"
+                required 
+                [formControl]="checkInStateControl"
+                placeholder="Check in date" 
+                [min]="currentDate">
+            
+            <button 
+                mdSuffix 
+                [mdDatepickerToggle]="checkIn">
+            </button>
         </md-input-container>
+
         <md-datepicker #checkIn></md-datepicker>
     </md-grid-tile>
     <md-grid-tile>
-        <md-input-container class="date-picker-container" (click)="checkOut.open()">
-            <input #checkOutInput mdInput [mdDatepicker]="checkOut" [readonly]="true"
-                required [formControl]="checkOutStateControl" [min]="currentDate"
+        <md-input-container 
+            class="date-picker-container" 
+            (click)="checkOut.open()">
+            
+            <input 
+                #checkOutInput 
+                mdInput 
+                [mdDatepicker]="checkOut" 
+                [readonly]="true"
+                required 
+                [formControl]="checkOutStateControl" 
+                [min]="currentDate"
                 placeholder="Check out date">
-            <button mdSuffix [mdDatepickerToggle]="checkOut"></button>
+
+            <button 
+                mdSuffix 
+                [mdDatepickerToggle]="checkOut">
+            </button>
         </md-input-container>
         <md-datepicker #checkOut></md-datepicker>
     </md-grid-tile>
