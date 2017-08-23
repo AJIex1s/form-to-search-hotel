@@ -1,8 +1,10 @@
-.loading  {
+.loading  
+{
   width: 60px;
   height: 60px;
   display: none;
 }
-.loading.active {
+.loading.active 
+{
   display: block;
 }
