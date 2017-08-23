@@ -1,4 +1,8 @@
 ###################
+# MSVS #
+###################
+
+###################
 # compiled source #
 ###################
 *.com
@@ -77,6 +81,10 @@ _[Ss]cripts
 */App_Data/*
 *.ldf
 
+###################
+# FRONT-END #
+###################
+
 # Logs
 logs
 *.log
@@ -119,8 +127,8 @@ jspm_packages
 .vscode
 
 # JavaScript files
-app/**/*.js
-app/**/*.js.map
+**/*.js
+**/*.js.map
 
 dist/*
 
