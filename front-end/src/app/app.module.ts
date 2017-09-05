@@ -22,6 +22,7 @@ import { RadioOptionComponent } from './search-form/radio-option/radio-option.co
 import { SearchRequestsComponent } from './search-requests/search-requests.component';
 
 import { FormDataService } from './shared/formData.service';
+import { AppConfig } from './app.config';
 
 @NgModule({
     imports: [BrowserModule, BrowserAnimationsModule, MdButtonModule,
@@ -40,7 +41,7 @@ import { FormDataService } from './shared/formData.service';
         RadioOptionComponent,
         SearchRequestsComponent
     ],
-    providers: [FormDataService],
+    providers: [FormDataService, AppConfig],
     bootstrap: [AppComponent]
 })
 export class AppModule {

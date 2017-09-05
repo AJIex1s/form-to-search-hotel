@@ -3,7 +3,7 @@ export interface Option {
     selected: boolean;
     controlName?: string;
 }
-export class FormData {
+export class FormDto {
     public Id: string;
     public Sended: string;
     public FieldsValues: string;
@@ -13,6 +13,7 @@ export class Field {
     public highlighted: boolean = false;
     constructor(public name: string, public value: any) { }
 }
+
 export class SearchFormData {
     public fields: Field[] = [];
     
