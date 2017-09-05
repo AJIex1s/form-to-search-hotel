@@ -16,11 +16,11 @@
                 placeholder="Check in date" 
                 [min]="currentDate">
             
-            <button 
+            <md-datepicker-toggle 
                 mdSuffix 
-                [mdDatepickerToggle]="checkIn">
-            </button>
-        </md-input-container>
+                [for]="checkIn">
+            </md-datepicker-toggle>
+    </md-input-container>
 
         <md-datepicker #checkIn></md-datepicker>
     </md-grid-tile>
@@ -39,10 +39,10 @@
                 [min]="currentDate"
                 placeholder="Check out date">
 
-            <button 
+            <md-datepicker-toggle 
                 mdSuffix 
-                [mdDatepickerToggle]="checkOut">
-            </button>
+                [for]="checkOut">
+            </md-datepicker-toggle>
         </md-input-container>
         <md-datepicker #checkOut></md-datepicker>
     </md-grid-tile>
