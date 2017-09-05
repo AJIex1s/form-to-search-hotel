@@ -19,13 +19,13 @@ export class DateRangeComponent implements AfterContentChecked {
     
     ngAfterContentChecked() {
         this.checkInStateControl.valueChanges
-            .subscribe(value => this.checkInChanged(value));
+            .subscribe(value => this.checkInDateChanged(value));
 
         this.checkOutStateControl.valueChanges
-            .subscribe(value => this.checkOutChanged(value));
+            .subscribe(value => this.checkOutDateChanged(value));
     }
 
-    private checkInChanged(date: Date) {
+    private checkInDateChanged(date: Date) {
         if (!date)
             return;
 
@@ -35,7 +35,7 @@ export class DateRangeComponent implements AfterContentChecked {
         if (checkInDate > checkOutDate || !checkOutDate)
             this.checkOutStateControl.setValue(GetNextDayDate(checkInDate));
     }
-    private checkOutChanged(date: Date) {
+    private checkOutDateChanged(date: Date) {
         if (!date)
             return;
         

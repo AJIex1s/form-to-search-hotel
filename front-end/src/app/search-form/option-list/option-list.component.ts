@@ -17,7 +17,7 @@ export class OptionListComponent {
     @Input('options') options: Option[];
     @Input('listType') listType: string;
     @Input('title') title: string;
-    @Input('parentFormGroup') parentFormGroup: FormGroup;
-    @Input('columnCount') columnCount: number;
     @Input('titlePosition') titlePosition: string;
+    @Input('columnCount') columnCount: number;
+    @Input('parentFormGroup') parentFormGroup: FormGroup;
 }

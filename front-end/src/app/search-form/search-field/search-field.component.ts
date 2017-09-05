@@ -34,6 +34,8 @@ export class SearchFieldComponent implements AfterContentInit, OnInit {
             return this.destinationPlaces;
 
         preparedFilterValue = val.toLowerCase();
-        return this.destinationPlaces.filter(place => place.toLowerCase().indexOf(preparedFilterValue) === 0);
+        
+        return this.destinationPlaces
+            .filter(place => place.toLowerCase().indexOf(preparedFilterValue) === 0);
     }
 }

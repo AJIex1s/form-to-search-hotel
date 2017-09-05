@@ -13,7 +13,7 @@ export class RadioOptionComponent {
     @Input('selected') selected: boolean;
     @Input('stateControl') stateControl: FormControl;
 
-    //hack couse of there is no md-radio-group(todo - to research ui framework)
+    // hack - md-radio-group(FormControl) is not working in some cases
     valueChanged(event: MdRadioChange) {
         this.stateControl.setValue(event.source.checked);
     }

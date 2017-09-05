@@ -5,13 +5,11 @@
   border: 1px solid rgba(0,0,0,.12);
   padding: 20px 20px 0px; 
 }
-
 search-field,
 date-range,
 option-list {
   width: 90%;
 }
-
 .search-button {
   margin-top: -10px;
   width: 30%;

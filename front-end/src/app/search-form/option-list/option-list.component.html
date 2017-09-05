@@ -1,9 +1,9 @@
 <md-grid-list 
-    [cols]="columnCount" 
-    class="options-list" 
-    rowHeight="50px" 
+    class="options-list"
+    [cols]="columnCount"  
+    [formGroup]="parentFormGroup"
     gutterSize="0px" 
-    [formGroup]="parentFormGroup">
+    rowHeight="50px">
     
     <md-grid-tile [colspan]="titlePosition == 'top' ? columnCount : 1">
         <div class="options-list-header">
@@ -19,16 +19,16 @@
         </ng-template>
          <ng-template #checkList>
             <check-option 
-                [stateControl]="parentFormGroup.controls[option.controlName]"
                 [name]="option.name" 
-                [selected]="option.selected">
+                [selected]="option.selected"
+                [stateControl]="parentFormGroup.controls[option.controlName]">
             </check-option>
         </ng-template>
         <ng-template #radioList>
             <radio-option 
-                [stateControl]="parentFormGroup.controls[option.controlName]"
                 [name]="option.name" 
-                [selected]="option.selected">
+                [selected]="option.selected"
+                [stateControl]="parentFormGroup.controls[option.controlName]">
             </radio-option>
         </ng-template>  
     </md-grid-tile>
