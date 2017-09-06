@@ -28,8 +28,8 @@
 .filter-field-container md-input-container {
     width: 100%;
 }
-md-checkbox:hover {
-    cursor: text !important;
+.data-grid-container md-checkbox:hover {
+    cursor: default !important;
 }
 form.grid-filter-form .data-grid-container .progressBar  {
   display: none;
