@@ -18,16 +18,16 @@ import { SearchFormData, Field, DataService, DataRow } from '../../shared/classe
 })
 export class DataGridComponent implements OnInit {
     @Input('dataService') dataService: DataService;
+    @Input('sortByColumnIndex') sortByColumnIndex: number;
     private data: DataRow[];
+    private headers: string[] = [];
+
     private filteredData: any;
     private filterForm: FormGroup;
     private filterFieldStateControl: FormControl;
-    private columnCount: number = 0;
 
-    //old
-    private searchRequests: SearchFormData[];
-    private filteredSearchRequests: any;
-    private fieldNames: string[] = [];
+    private columnCount: number = 1;
+    private dataLoading = false;
 
     constructor() {
         this.filterFieldStateControl = new FormControl();
@@ -37,20 +37,40 @@ export class DataGridComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.dataLoading = true;
         this.dataService.getData()
             .catch(err => Observable.throw(err))
             .subscribe(res => this.dataReceived(res));
     }
-
+    private sortData() {
+        this.data = this.data.sort((row1, row2) => {
+            if(row1.fields[this.sortByColumnIndex] > row2.fields[this.sortByColumnIndex])
+                return 1;
+            if(row1.fields[this.sortByColumnIndex] < row2.fields[this.sortByColumnIndex])
+                return -1;
+            return 0;
+        });
+    }
     private dataReceived(data: DataRow[]) {
-        this.data = data;
+        if (data.length < 1)
+            return;
 
-        if (data.length > 0) {
-            this.fieldNames = data[0].fields.map(field => field.name);
-            this.columnCount = data[0].fields.length;
-        }
+        this.headers = data[0].fields.map(field => field.name);
+        this.columnCount = data[0].fields.length;
+
+        if(!this.sortByColumnIndex)
+            this.data = data;
+        else {
+         
+            if(this.sortByColumnIndex > data.length)
+                this.sortData()
+            else
+                throw "sorting column index is more than columns count";      
+        }  
 
         this.subscribeOnFilterChanged();
+
+        this.dataLoading = false;
     }
 
     private subscribeOnFilterChanged() {
@@ -67,19 +87,20 @@ export class DataGridComponent implements OnInit {
             return this.data;
 
         let preparedFilterValue = filterValue.toLowerCase();
-        let needToShowRow: boolean = false;
+        let needToShowDataRow: boolean = false;
 
-        return this.searchRequests.filter(request => {
-            needToShowRow = false;
+        return this.data.filter(dataRow => {
+            needToShowDataRow = false;
+            dataRow.fields.forEach(field => {
 
-            request.fields.forEach(field => {
-                field.highlighted = field.value.toString().toLowerCase().indexOf(preparedFilterValue) > -1;
+                field.highlighted = field.value.toString().toLowerCase()
+                                        .indexOf(preparedFilterValue) > -1;
 
-                if (!needToShowRow && field.highlighted)
-                    needToShowRow = true;
+                if (!needToShowDataRow && field.highlighted)
+                    needToShowDataRow = true;
             });
 
-            return needToShowRow;
+            return needToShowDataRow;
         });
     }
 
