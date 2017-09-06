@@ -104,7 +104,7 @@ export class DataGridComponent implements OnInit {
     private onDataReceivingError(err: any) {
         setTimeout(function () {
             this.dataLoading = false;
-            alert("data doesn't loaded");
+            alert("data didn't loaded");
         }.bind(this), this.HIDE_DATA_LOADING_DELAY_ON_ERROR);
 
         return Observable.throw(err);
