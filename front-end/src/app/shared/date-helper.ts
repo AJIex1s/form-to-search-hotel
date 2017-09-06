@@ -13,3 +13,7 @@ export const GetPrevDayDate = function (date: Date): Date {
 export const GetFormattedDate = function (date: string): string {
     return new Date(date).toLocaleDateString() + " " + new Date(date).toLocaleTimeString();
 }
+export const tryCastStringValueToDate = function(value: string): any {
+    let date = new Date(value)
+    return date.getMonth && date.getMonth() <= 12 ? date : value;
+}

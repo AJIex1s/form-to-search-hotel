@@ -8,6 +8,7 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/throw';
 
 import { Field, DataService, DataRow } from '../../shared/classes';
+import { tryCastStringValueToDate } from '../../shared/date-helper';
 
 
 @Component({
@@ -70,12 +71,19 @@ export class DataGridComponent implements OnInit {
         this.subscribeOnFilterChanged();
         this.hideLoading();
     }
-
+    private tryCastFieldValueToDate(value: string): any {
+        let date = new Date(value)
+        return date.getMonth && date.getMonth() <= 12 ? date : value;
+    }
     private sortData() {
         this.data = this.data.sort((row1, row2) => {
-            if(row1.fields[this.sortByColumnIndex] > row2.fields[this.sortByColumnIndex])
+            //hack if field has date type
+            let row1fieldValue = tryCastStringValueToDate(row1.fields[this.sortByColumnIndex].value);
+            let row2fieldValue = tryCastStringValueToDate(row2.fields[this.sortByColumnIndex].value);
+            
+            if(row1fieldValue > row2fieldValue)
                 return 1;
-            if(row1.fields[this.sortByColumnIndex] < row2.fields[this.sortByColumnIndex])
+            if(row1fieldValue < row2fieldValue)
                 return -1;
             return 0;
         });
