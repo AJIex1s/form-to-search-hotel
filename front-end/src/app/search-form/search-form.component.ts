@@ -19,12 +19,14 @@ import { FormContentService } from '../shared/form-content.service';
     styleUrls: ["search-form.component.css"]
 })
 export class SearchFormComponent implements AfterViewInit, AfterContentInit {
+    @ViewChild('tripOptionsContainer') tripOptionsContainer: MdGridTile;
+
     private searchFormGroup: FormGroup;
     private commonTripOptions: Option[];
     private tripForWorkOptions: Option[];
     private displayOptions: boolean = true;
     private dataSending: boolean = false;
-    @ViewChild('tripOptionsContainer') tripOptionsContainer: MdGridTile;
+    private destinationPlaces: string[] = [];
 
     //refactor - rewrite by builder
     constructor(private cd: ChangeDetectorRef, 
@@ -35,6 +37,7 @@ export class SearchFormComponent implements AfterViewInit, AfterContentInit {
         this.initializeFormGroup();
     }
     private initializeFormData() {
+        this.destinationPlaces = this.formContentService.getDestinationPlaces();
         this.commonTripOptions = this.formContentService.getTripOptions();
         this.tripForWorkOptions = [
             { controlName: 'tripForWork', name: 'Yes', selected: false },

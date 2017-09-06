@@ -2,8 +2,11 @@
         <form (submit)="searchFormSubmit($event)" class="search-form" [formGroup]="searchFormGroup">
             <md-grid-list cols="1" rowHeight="75px">
                 <md-grid-tile>
-                    <search-field [stateControl]="searchFormGroup.controls.searchFieldStateControl">
-                    </search-field>
+                    <autocomplete-text-box 
+                        [stateControl]="searchFormGroup.controls.searchFieldStateControl"
+                        [items]="destinationPlaces"
+                        placeholder="Destination, property name or address">
+                    </autocomplete-text-box>
                 </md-grid-tile>
                 <md-grid-tile>
                     <date-range 
