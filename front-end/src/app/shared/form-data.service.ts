@@ -29,7 +29,7 @@ export class FormDataService implements DataService {
      }
     
 
-    getSearchRequestsData(): Observable<SearchFormData[]> {
+    private getSearchRequestsData(): Observable<SearchFormData[]> {
         let searchRequests: SearchFormData[] = [];
         return this.http.get(this.apiBaseUrl)
             .map(res => res.json() as FormDto[])
