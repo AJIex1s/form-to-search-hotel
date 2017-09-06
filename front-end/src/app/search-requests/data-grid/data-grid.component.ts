@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/throw';
 
-import { SearchFormData, Field, DataService, DataRow } from '../../shared/classes';
+import { Field, DataService, DataRow } from '../../shared/classes';
 
 
 @Component({
@@ -19,15 +19,17 @@ import { SearchFormData, Field, DataService, DataRow } from '../../shared/classe
 export class DataGridComponent implements OnInit {
     @Input('dataService') dataService: DataService;
     @Input('sortByColumnIndex') sortByColumnIndex: number;
+
     private data: DataRow[];
     private headers: string[] = [];
-
+    private columnCount: number = 1;
+    
     private filteredData: any;
     private filterForm: FormGroup;
     private filterFieldStateControl: FormControl;
 
-    private columnCount: number = 1;
     private dataLoading = false;
+    private readonly HIDE_DATA_LOADING_DELAY_ON_ERROR = 1000;
 
     constructor() {
         this.filterFieldStateControl = new FormControl();
@@ -40,8 +42,26 @@ export class DataGridComponent implements OnInit {
         this.dataLoading = true;
         this.dataService.getData()
             .catch(err => Observable.throw(err))
-            .subscribe(res => this.dataReceived(res));
+            .subscribe(data => this.onDataReceived(data));
     }
+
+    private onDataReceived(data: DataRow[]) {
+        if (data.length < 1)
+            return;
+        
+        this.data = data;
+        this.headers = data[0].fields.map(field => field.name);
+        this.columnCount = data[0].fields.length;
+
+        if(this.sortByColumnIndex < data.length)
+            this.sortData()
+        else
+            throw "sortBy column index is more than columns count";      
+
+        this.subscribeOnFilterChanged();
+        this.hideLoading();
+    }
+
     private sortData() {
         this.data = this.data.sort((row1, row2) => {
             if(row1.fields[this.sortByColumnIndex] > row2.fields[this.sortByColumnIndex])
@@ -51,27 +71,6 @@ export class DataGridComponent implements OnInit {
             return 0;
         });
     }
-    private dataReceived(data: DataRow[]) {
-        if (data.length < 1)
-            return;
-
-        this.headers = data[0].fields.map(field => field.name);
-        this.columnCount = data[0].fields.length;
-
-        if(!this.sortByColumnIndex)
-            this.data = data;
-        else {
-         
-            if(this.sortByColumnIndex > data.length)
-                this.sortData()
-            else
-                throw "sorting column index is more than columns count";      
-        }  
-
-        this.subscribeOnFilterChanged();
-
-        this.dataLoading = false;
-    }
 
     private subscribeOnFilterChanged() {
         this.filteredData = this.filterFieldStateControl.valueChanges
@@ -79,7 +78,6 @@ export class DataGridComponent implements OnInit {
             .map(name => this.getFilteredData(name));
     }
 
-    // filter(search in data)
     private getFilteredData(filterValue: string): DataRow[] {
         this.data.forEach(req => req.fields.forEach(f => f.highlighted = false));
 
@@ -103,7 +101,19 @@ export class DataGridComponent implements OnInit {
             return needToShowDataRow;
         });
     }
+    private onDataReceivingError(err: any) {
+        setTimeout(function () {
+            this.dataLoading = false;
+            alert("data doesn't loaded");
+        }.bind(this), this.HIDE_DATA_LOADING_DELAY_ON_ERROR);
 
+        return Observable.throw(err);
+    }
+    private hideLoading() {
+        setTimeout(function () {
+            this.dataLoading = false;
+        }.bind(this), 300);
+    }
     private needToRenderCheckBox(field: Field) {
         return field.value == 'true' || field.value == 'false';
     }
