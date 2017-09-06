@@ -1,6 +1,6 @@
 import { Component, Input, AfterContentInit, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FormDataService } from '../../shared/formData.service';
+import { FormContentService } from '../../shared/formContent.service';
 
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
@@ -16,11 +16,11 @@ export class SearchFieldComponent implements AfterContentInit, OnInit {
     private filteredDestinationPlaces: any;
     private destinationPlaces: string[];
 
-    constructor(private formDataService: FormDataService) {
+    constructor(private formContentService: FormContentService) {
         this.destinationPlaces = [];
     }
     ngOnInit() {
-        this.destinationPlaces = this.formDataService.getDestinationPlaces();
+        this.destinationPlaces = this.formContentService.getDestinationPlaces();
     }
     ngAfterContentInit() {
         this.filteredDestinationPlaces = this.stateControl.valueChanges

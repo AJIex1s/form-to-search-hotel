@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+
 export interface Option {
     name: string;
     selected: boolean;
@@ -14,7 +16,15 @@ export class Field {
     constructor(public name: string, public value: any) { }
 }
 
-export class SearchFormData {
+export interface DataRow {
+    fields: Field[];
+}
+export interface DataService {
+    getData(): Observable<DataRow[]>;
+    sendData(): Observable<any>;
+}
+
+export class SearchFormData implements DataRow {
     public fields: Field[] = [];
     
     constructor(public sended: string, public fieldValues: string) {
@@ -23,3 +33,4 @@ export class SearchFormData {
             .map(key => new Field(key, fieldValuesJson[key]));
     }
 }
+

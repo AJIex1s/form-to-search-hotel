@@ -1,14 +1,16 @@
 import { Component, OnInit, AfterViewInit, ViewChild, AfterContentInit, ChangeDetectorRef } from '@angular/core';
-import { MdGridTile } from '@angular/material';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Option } from '../shared/classes';
-import { FormDataService } from '../shared/formData.service';
+import { MdGridTile } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+
+import { Option } from '../shared/classes';
+import { FormDataService } from '../shared/formData.service';
+import { FormContentService } from '../shared/formContent.service';
 
 @Component({
     moduleId: module.id.toString(),
@@ -25,12 +27,15 @@ export class SearchFormComponent implements AfterViewInit, AfterContentInit {
     @ViewChild('tripOptionsContainer') tripOptionsContainer: MdGridTile;
 
     //refactor - rewrite by builder
-    constructor(private cd: ChangeDetectorRef, private formDataService: FormDataService) {
+    constructor(private cd: ChangeDetectorRef, 
+                private formDataService: FormDataService,
+                private formContentService: FormContentService) {
+
         this.initializeFormData();
         this.initializeFormGroup();
     }
     private initializeFormData() {
-        this.commonTripOptions = this.formDataService.getTripOptions();
+        this.commonTripOptions = this.formContentService.getTripOptions();
         this.tripForWorkOptions = [
             { controlName: 'tripForWork', name: 'Yes', selected: false },
             { controlName: 'tripNotForWork', name: 'No', selected: true }

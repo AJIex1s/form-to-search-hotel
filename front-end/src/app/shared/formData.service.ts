@@ -6,15 +6,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { SearchFormData, FormDto, Option } from './classes';
+import { SearchFormData, FormDto, Option, DataRow, DataService } from './classes';
 import { GetFormattedDate } from './dateHelper';
-import { destinationPlaces, tripOptions } from './data';
 import { AppConfig } from '../app.config';
 
 
+
 @Injectable()
-export class FormDataService {
-    private destinationPlaces: string[] = destinationPlaces;
+export class FormDataService implements DataService {
     private searchRequests: SearchFormData[] = [];
     private apiBaseUrl = "";
 
@@ -22,12 +21,13 @@ export class FormDataService {
         this.apiBaseUrl = appConfig.GetDataServiceURL();
      }
 
-    getTripOptions(): Option[] {
-        return tripOptions;
-    } 
-    getDestinationPlaces(): string[] {
-        return this.destinationPlaces;
-    }
+     getData(): Observable<DataRow[]> {
+         return null;
+     }
+     sendData(): Observable<any> {
+         return null;
+     }
+    
 
     getSearchRequestsData(): Observable<SearchFormData[]> {
         let searchRequests: SearchFormData[] = [];
@@ -40,12 +40,12 @@ export class FormDataService {
             .catch(err => this.handleError(err));
     }
 
-    sendSearchRequest(params: any): Observable<any> {
+    sendSearchRequest(jsonData: any): Observable<any> {
         let headers = new Headers({
             'Content-Type': 'application/json'
         });
         let options = new RequestOptions({ headers });
-        return this.http.post(this.apiBaseUrl, params, options)
+        return this.http.post(this.apiBaseUrl, jsonData, options)
             .catch(err => this.handleError(err));
     }
 

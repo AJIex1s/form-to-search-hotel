@@ -23,6 +23,7 @@ import { SearchRequestsComponent } from './search-requests/search-requests.compo
 import { DataGridComponent } from './search-requests/data-grid/data-grid.component';
 
 import { FormDataService } from './shared/formData.service';
+import { FormContentService } from './shared/formContent.service';
 import { AppConfig } from './app.config';
 
 @NgModule({
@@ -43,7 +44,7 @@ import { AppConfig } from './app.config';
         DataGridComponent,
         SearchRequestsComponent
     ],
-    providers: [FormDataService, AppConfig],
+    providers: [FormDataService, FormContentService, AppConfig],
     bootstrap: [AppComponent]
 })
 export class AppModule {

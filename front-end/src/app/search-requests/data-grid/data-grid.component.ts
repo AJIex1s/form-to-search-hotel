@@ -17,7 +17,7 @@ import { Observable } from 'rxjs/Observable';
     styleUrls: ['data-grid.component.css']
 })
 export class DataGridComponent implements OnInit {
-    @Input('data') searchRequests: SearchFormData[] = [];
+    @Input('data') searchRequests: SearchFormData[];
     filteredSearchRequests: any;
     private dataFieldsCount: number = 0;
     private fieldNames: string[] = [];
@@ -32,6 +32,7 @@ export class DataGridComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.searchRequests);
         if (this.searchRequests.length > 0) {
             this.fieldNames = this.searchRequests[0].fields.map(field => field.name);
             this.dataFieldsCount = this.searchRequests[0].fields.length;
