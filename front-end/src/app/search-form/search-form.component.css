@@ -5,7 +5,7 @@
   border: 1px solid rgba(0,0,0,.12);
   padding: 20px 20px 0px; 
 }
-autocomplete-text-box,
+autocomplete,
 date-range,
 option-list {
   width: 90%;

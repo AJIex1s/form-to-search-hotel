@@ -19,19 +19,18 @@ export class Field {
 export interface DataRow {
     fields: Field[];
 }
+export class SearchFormData implements DataRow {
+    public fields: Field[] = [];
+    
+    constructor(private sended: string, public fieldsJsonString: string) {
+        let fieldsJson = JSON.parse(this.fieldsJsonString);
+        this.fields = Object.keys(fieldsJson)
+            .map(key => new Field(key, fieldsJson[key]));
+        this.fields.unshift(new Field("Sended Date", sended));
+    }
+}
+
 export interface DataService {
     getData(): Observable<DataRow[]>;
     sendData(jsonData: any): Observable<any>;
 }
-
-export class SearchFormData implements DataRow {
-    public fields: Field[] = [];
-    
-    constructor(public sended: string, public fieldValues: string) {
-        let fieldValuesJson = JSON.parse(this.fieldValues);
-        this.fields = Object.keys(fieldValuesJson)
-            .map(key => new Field(key, fieldValuesJson[key]));
-        this.fields.unshift(new Field("SendDate", sended));
-    }
-}
-

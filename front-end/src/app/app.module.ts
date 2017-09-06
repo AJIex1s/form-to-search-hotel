@@ -18,7 +18,7 @@ import { DateRangeComponent } from './search-form/date-range/date-range.componen
 import { OptionListComponent } from './search-form/option-list/option-list.component';
 import { CheckOptionComponent } from './search-form/check-option/check-option.component';
 import { RadioOptionComponent } from './search-form/radio-option/radio-option.component';
-import { AutocompleteTextBoxComponent } from './search-form/autocomplete-text-box/autocomplete-text-box.component';
+import { AutocompleteTextBoxComponent } from './search-form/autocomplete/autocomplete.component';
 
 import { SearchRequestsComponent } from './search-requests/search-requests.component';
 import { DataGridComponent } from './search-requests/data-grid/data-grid.component';

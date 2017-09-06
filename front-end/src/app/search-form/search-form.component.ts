@@ -20,15 +20,15 @@ import { FormContentService } from '../shared/form-content.service';
 })
 export class SearchFormComponent implements AfterViewInit, AfterContentInit {
     @ViewChild('tripOptionsContainer') tripOptionsContainer: MdGridTile;
-
     private searchFormGroup: FormGroup;
+
     private commonTripOptions: Option[];
     private tripForWorkOptions: Option[];
-    private displayOptions: boolean = true;
-    private dataSending: boolean = false;
     private destinationPlaces: string[] = [];
+    private displayOptions: boolean = true;
 
-    //refactor - rewrite by builder
+    private dataSending: boolean = false;
+
     constructor(private cd: ChangeDetectorRef, 
                 private formDataService: FormDataService,
                 private formContentService: FormContentService) {
@@ -87,10 +87,9 @@ export class SearchFormComponent implements AfterViewInit, AfterContentInit {
             .subscribe(data => this.dataSending = false);
     }
     private onSubmitRequesError() {
-        //prevent blinking
         setTimeout(function () {
             this.dataSending = false;
-            alert("data doesn't sended");
+            alert("data didn't sended");
         }.bind(this), 1000);
     }
     private getPreparedFormDataToSend(): object {

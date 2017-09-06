@@ -7,9 +7,9 @@ import 'rxjs/add/operator/map';
 
 @Component({
     moduleId: module.id.toString(),
-    selector: 'autocomplete-text-box',
-    templateUrl: 'autocomplete-text-box.component.html',
-    styleUrls: ['autocomplete-text-box.component.css']
+    selector: 'autocomplete',
+    templateUrl: 'autocomplete.component.html',
+    styleUrls: ['autocomplete.component.css']
 })
 export class AutocompleteTextBoxComponent implements AfterContentInit {
     @Input('stateControl') stateControl: FormControl;
