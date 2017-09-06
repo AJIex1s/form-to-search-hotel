@@ -1,6 +1,6 @@
 import { Component, Input, AfterContentInit, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FormContentService } from '../../shared/formContent.service';
+import { FormContentService } from '../../shared/form-content.service';
 
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';

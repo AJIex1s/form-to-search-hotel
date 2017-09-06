@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/throw';
 
-import { FormDataService } from '../shared/formData.service';
+import { FormDataService } from '../shared/form-data.service';
 import { SearchFormData, Field } from '../shared/classes';
 
 

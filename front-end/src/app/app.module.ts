@@ -22,8 +22,8 @@ import { RadioOptionComponent } from './search-form/radio-option/radio-option.co
 import { SearchRequestsComponent } from './search-requests/search-requests.component';
 import { DataGridComponent } from './search-requests/data-grid/data-grid.component';
 
-import { FormDataService } from './shared/formData.service';
-import { FormContentService } from './shared/formContent.service';
+import { FormDataService } from './shared/form-data.service';
+import { FormContentService } from './shared/form-content.service';
 import { AppConfig } from './app.config';
 
 @NgModule({

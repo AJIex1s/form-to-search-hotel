@@ -1,7 +1,7 @@
 import { Component, Input, AfterContentChecked } from '@angular/core';
 import { MdDatepickerInput } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { GetNextDayDate, GetPrevDayDate } from '../../shared/dateHelper';
+import { GetNextDayDate, GetPrevDayDate } from '../../shared/date-helper';
 
 @Component({
     moduleId: module.id.toString(),

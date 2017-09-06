@@ -9,8 +9,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { Option } from '../shared/classes';
-import { FormDataService } from '../shared/formData.service';
-import { FormContentService } from '../shared/formContent.service';
+import { FormDataService } from '../shared/form-data.service';
+import { FormContentService } from '../shared/form-content.service';
 
 @Component({
     moduleId: module.id.toString(),

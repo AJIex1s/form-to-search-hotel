@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { SearchFormData, FormDto, Option, DataRow, DataService } from './classes';
-import { GetFormattedDate } from './dateHelper';
+import { GetFormattedDate } from './date-helper';
 import { AppConfig } from '../app.config';
 
 
@@ -22,10 +22,10 @@ export class FormDataService implements DataService {
      }
 
      getData(): Observable<DataRow[]> {
-         return null;
+         return this.getSearchRequestsData();
      }
-     sendData(): Observable<any> {
-         return null;
+     sendData(jsonData: any): Observable<any> {
+         return this.sendSearchRequest(jsonData);
      }
     
 

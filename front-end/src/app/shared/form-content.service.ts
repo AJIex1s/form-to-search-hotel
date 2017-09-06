@@ -1,10 +1,9 @@
-import { destinationPlaces, tripOptions } from './data';
+import { destinationPlaces, tripOptions } from './static-data';
 import { Option } from './classes';
 
 export class FormContentService {
-    private destinationPlaces: string[] = destinationPlaces;
     getDestinationPlaces(): string[] {
-        return this.destinationPlaces;
+        return destinationPlaces;
     }
     
     getTripOptions(): Option[] {
