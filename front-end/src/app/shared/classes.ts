@@ -21,7 +21,7 @@ export interface DataRow {
 }
 export interface DataService {
     getData(): Observable<DataRow[]>;
-    sendData(): Observable<any>;
+    sendData(jsonData: any): Observable<any>;
 }
 
 export class SearchFormData implements DataRow {
