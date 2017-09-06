@@ -41,8 +41,17 @@ export class DataGridComponent implements OnInit {
     ngOnInit() {
         this.dataLoading = true;
         this.dataService.getData()
-            .catch(err => Observable.throw(err))
+            .catch(err => this.onDataReceivingError(err))
             .subscribe(data => this.onDataReceived(data));
+    }
+
+    private onDataReceivingError(err: any) {
+        setTimeout(function () {
+            this.dataLoading = false;
+            alert("data didn't loaded");
+        }.bind(this), this.HIDE_DATA_LOADING_DELAY_ON_ERROR);
+
+        return Observable.throw(err);
     }
 
     private onDataReceived(data: DataRow[]) {
@@ -100,14 +109,6 @@ export class DataGridComponent implements OnInit {
 
             return needToShowDataRow;
         });
-    }
-    private onDataReceivingError(err: any) {
-        setTimeout(function () {
-            this.dataLoading = false;
-            alert("data didn't loaded");
-        }.bind(this), this.HIDE_DATA_LOADING_DELAY_ON_ERROR);
-
-        return Observable.throw(err);
     }
     private hideLoading() {
         setTimeout(function () {

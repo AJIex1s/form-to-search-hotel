@@ -33,31 +33,10 @@ export class SearchFormComponent implements AfterViewInit, AfterContentInit {
                 private formDataService: FormDataService,
                 private formContentService: FormContentService) {
 
-        this.initializeFormData();
-        this.initializeFormGroup();
+        this.prepareFormData();
+        this.prepareFormGroup();
     }
-    private initializeFormData() {
-        this.destinationPlaces = this.formContentService.getDestinationPlaces();
-        this.commonTripOptions = this.formContentService.getTripOptions();
-        this.tripForWorkOptions = [
-            { controlName: 'tripForWork', name: 'Yes', selected: false },
-            { controlName: 'tripNotForWork', name: 'No', selected: true }
-        ];
-    }
-    private initializeFormGroup() {
-        this.searchFormGroup = new FormGroup({
-            'searchFieldStateControl': new FormControl(),
-            'checkInStateControl': new FormControl(),
-            'checkOutStateControl': new FormControl(),
-            'tripForWork': new FormControl(false),
-            'tripNotForWork': new FormControl(true)
-        });
-
-        this.commonTripOptions.forEach(option => {
-            this.searchFormGroup.addControl(option.controlName, new FormControl(false));
-        });
-    }
-
+    
     //workaround for ExpressionChangedAfterItHasBeenCheckedError
     ngAfterContentInit() {
         this.cd.detectChanges();
@@ -69,6 +48,28 @@ export class SearchFormComponent implements AfterViewInit, AfterContentInit {
             let optionsRowCount = Math.ceil(tripOptionsCount / 3);
             this.tripOptionsContainer.rowspan = optionsRowCount + 1;
         }
+    }
+
+    private prepareFormData() {
+        this.destinationPlaces = this.formContentService.getDestinationPlaces();
+        this.commonTripOptions = this.formContentService.getTripOptions();
+        this.tripForWorkOptions = [
+            { controlName: 'tripForWork', name: 'Yes', selected: false },
+            { controlName: 'tripNotForWork', name: 'No', selected: true }
+        ];
+    }
+    private prepareFormGroup() {
+        this.searchFormGroup = new FormGroup({
+            'searchFieldStateControl': new FormControl(),
+            'checkInStateControl': new FormControl(),
+            'checkOutStateControl': new FormControl(),
+            'tripForWork': new FormControl(false),
+            'tripNotForWork': new FormControl(true)
+        });
+
+        this.commonTripOptions.forEach(option => {
+            this.searchFormGroup.addControl(option.controlName, new FormControl(false));
+        });
     }
 
     private searchFormSubmit(event: Event) {
@@ -86,12 +87,14 @@ export class SearchFormComponent implements AfterViewInit, AfterContentInit {
             })
             .subscribe(data => this.dataSending = false);
     }
+    
     private onSubmitRequesError() {
         setTimeout(function () {
             this.dataSending = false;
             alert("data didn't sended");
         }.bind(this), 1000);
     }
+
     private getPreparedFormDataToSend(): object {
         let jsonData = {};
         let preparedName: string = "";
@@ -111,6 +114,7 @@ export class SearchFormComponent implements AfterViewInit, AfterContentInit {
         }
         return jsonData;
     }
+    
     //refactor - hack for field names 
     private prepareFieldName(name: string) {
         return name.split(/(?=[A-Z])/)

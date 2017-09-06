@@ -12,5 +12,5 @@ export const tripOptions = [
     { controlName: 'freeCancelation', name: 'free cancellation', selected: false },
     { controlName: 'parking', name: 'parking', selected: false },
     { controlName: 'fishing', name: 'fishing', selected: false },
-    { controlName: 'breakFastIn', name: 'breakfast included', selected: false }
+    { controlName: 'breakfastIn', name: 'breakfast included', selected: false }
 ];
