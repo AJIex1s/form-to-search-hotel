@@ -20,6 +20,7 @@ import { CheckOptionComponent } from './search-form/check-option/check-option.co
 import { RadioOptionComponent } from './search-form/radio-option/radio-option.component';
 
 import { SearchRequestsComponent } from './search-requests/search-requests.component';
+import { DataGridComponent } from './search-requests/data-grid/data-grid.component';
 
 import { FormDataService } from './shared/formData.service';
 import { AppConfig } from './app.config';
@@ -39,6 +40,7 @@ import { AppConfig } from './app.config';
         OptionListComponent,
         CheckOptionComponent,
         RadioOptionComponent,
+        DataGridComponent,
         SearchRequestsComponent
     ],
     providers: [FormDataService, AppConfig],
