@@ -31,6 +31,7 @@ export class SearchFormData implements DataRow {
         let fieldValuesJson = JSON.parse(this.fieldValues);
         this.fields = Object.keys(fieldValuesJson)
             .map(key => new Field(key, fieldValuesJson[key]));
+        this.fields.unshift(new Field("SendDate", sended));
     }
 }
 

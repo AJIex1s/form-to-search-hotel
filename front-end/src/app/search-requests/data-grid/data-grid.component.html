@@ -1,5 +1,6 @@
-<form (submit)="searchRequestsFormSubmit($event)" [formGroup]="searchRequestsForm" class="search-requests-filter-form">
-        <div class="search-field-container">
+<form [formGroup]="filterForm" class="search-requests-filter-form">
+        
+    <div class="search-field-container">
             <div class="search-field-content">
                 <md-input-container>
                     <input 
@@ -10,13 +11,14 @@
                 </md-input-container>
             </div>
         </div>
+    
         <div class="search-requests-container">
             <!-- <md-progress-bar 
                 mode="indeterminate" 
                 class="progressBar" 
                 [ngClass]="{'active': dataLoading}">
             </md-progress-bar> -->
-            <md-grid-list cols="{{dataFieldsCount + 1}}" rowHeight="50px" class="search-requests" gutterSize="10px">
+            <md-grid-list class="search-requests" [cols]="columnCount" rowHeight="50px" gutterSize="10px">
                 <md-grid-tile>
                     Send time
                 </md-grid-tile>

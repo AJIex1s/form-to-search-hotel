@@ -17,20 +17,6 @@ import { SearchFormData, Field } from '../shared/classes';
     templateUrl: 'search-requests.component.html',
     styleUrls: ['search-requests.component.css']
 })
-export class SearchRequestsComponent implements OnInit {
-    searchRequests: SearchFormData[] = [];
-
-    constructor(private formDataService: FormDataService) {}
-
-    ngOnInit() {
-        this.formDataService.getSearchRequestsData()
-            .catch(err => this.onDataReceivingError(err))
-            .subscribe(res => this.searchRequests = res); //check
-    }
-
-    private onDataReceivingError(err: any) {
-        alert("data doesn't loaded");
-
-        return Observable.throw(err);
-    }
+export class SearchRequestsComponent {
+    constructor(private searchRequestsDataService: FormDataService) {}
 }
